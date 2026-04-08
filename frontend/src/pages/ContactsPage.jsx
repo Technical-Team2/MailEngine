@@ -11,10 +11,6 @@ const MOCK_CONTACTS = [
   { id: 2, name: 'Sarah Achieng', email: 'sachieng@nairobi-hospital.org', phone: '+254 733 002 002', organization: 'Nairobi Hospital', sector: 'Hospital', type: 'prospect', status: 'active' },
   { id: 3, name: 'Peter Kamau', email: 'pkamau@techbridge.co.ke', phone: '+254 700 003 003', organization: 'TechBridge Kenya', sector: 'NGO', type: 'customer', status: 'active' },
   { id: 4, name: 'Grace Wanjiku', email: 'grace@eastafricatvet.ac.ke', phone: '+254 711 004 004', organization: 'East Africa TVET', sector: 'TVET', type: 'prospect', status: 'active' },
-  { id: 5, name: 'Ali Hassan', email: 'ali.hassan@momentuminc.co.ke', phone: '+254 722 005 005', organization: 'Momentum Inc.', sector: 'Corporate', type: 'customer', status: 'active' },
-  { id: 6, name: 'Faith Njeri', email: 'faith@afyacare.org', phone: '+254 733 006 006', organization: 'Afya Care', sector: 'NGO', type: 'prospect', status: 'unsubscribed' },
-  { id: 7, name: 'Daniel Otieno', email: 'd.otieno@polytechnic.ac.ke', phone: '+254 700 007 007', organization: 'Nairobi Polytechnic', sector: 'TVET', type: 'customer', status: 'active' },
-  { id: 8, name: 'Lucy Wambui', email: 'lwambui@redcross.or.ke', phone: '+254 711 008 008', organization: 'Kenya Red Cross', sector: 'NGO', type: 'prospect', status: 'active' },
 ];
 
 const SECTORS = ['All', 'TVET', 'Hospital', 'NGO', 'Corporate', 'Education'];
