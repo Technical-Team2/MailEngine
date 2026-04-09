@@ -15,7 +15,9 @@ import ExtractorPage from './pages/ExtractorPage';
 import './styles/globals.css';
 
 const queryClient = new QueryClient({
-  defaultOptions: { queries: { staleTime: 1000 * 60 * 5, retry: 1 } },
+  defaultOptions: {
+    queries: { staleTime: 30000, retry: 1, refetchOnWindowFocus: false },
+  },
 });
 
 function ProtectedLayout({ children }) {
@@ -33,10 +35,6 @@ function ProtectedLayout({ children }) {
 }
 
 export default function App() {
-  const { initAuth } = useAuthStore();
-
-  useEffect(() => { initAuth(); }, []);
-
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
@@ -47,7 +45,6 @@ export default function App() {
           <Route path="/contacts" element={<ProtectedLayout><ContactsPage /></ProtectedLayout>} />
           <Route path="/templates" element={<ProtectedLayout><TemplatesPage /></ProtectedLayout>} />
           <Route path="/campaigns" element={<ProtectedLayout><CampaignsPage /></ProtectedLayout>} />
-          <Route path="/campaigns/new" element={<ProtectedLayout><CampaignsPage /></ProtectedLayout>} />
           <Route path="/sectors" element={<ProtectedLayout><SectorsPage /></ProtectedLayout>} />
           <Route path="/extractor" element={<ProtectedLayout><ExtractorPage /></ProtectedLayout>} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
