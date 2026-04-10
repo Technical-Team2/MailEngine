@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: MailEngine-api
+    env: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      # Add the rest of your env vars in the Render dashboard
