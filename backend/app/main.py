@@ -2,10 +2,14 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .config import settings
 from .database import Base, engine
-from .api import auth, contacts, sectors, templates, campaigns, extraction
+from .api import auth, contacts, sectors, templates, campaigns, extraction, email
 
-# Create all tables
-Base.metadata.create_all(bind=engine)
+# Create all tables (with error handling for dev mode without database)
+try:
+    Base.metadata.create_all(bind=engine)
+except Exception as e:
+    print(f"⚠️  Warning: Could not connect to database: {str(e)}")
+    print("   Server running in dev mode without database. Connect PostgreSQL to enable features.")
 
 app = FastAPI(
     title="MailEngine API",
@@ -32,6 +36,7 @@ app.include_router(sectors.router, prefix=API_PREFIX)
 app.include_router(templates.router, prefix=API_PREFIX)
 app.include_router(campaigns.router, prefix=API_PREFIX)
 app.include_router(extraction.router, prefix=API_PREFIX)
+app.include_router(email.router, prefix=API_PREFIX)
 
 @app.get("/api/health")
 def health():
@@ -55,5 +60,7 @@ async def startup_event():
             db.add(admin)
             db.commit()
             print("✅ Default admin created: admin@mailengine.com / admin123")
+    except Exception as e:
+        print(f"⚠️  Could not seed admin user: {str(e)}")
     finally:
         db.close()
