@@ -10,4 +10,3 @@ services:
         value: production
       - key: PORT
         value: 5000
-      # Add the rest of your env vars in the Render dashboard
