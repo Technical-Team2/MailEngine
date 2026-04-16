@@ -10,29 +10,23 @@ export const useAuthStore = create(
       isAuthenticated: false,
 
       login: async (email, password) => {
-        // ==========================================
-  
-        
-        // 2. Simulate a slight network delay so your loading spinners still test correctly
-        await new Promise((resolve) => setTimeout(resolve, 500));
-
-        // 3. Create a fake successful response from the backend
-        const data = {
-          user: { 
-            id: 'mock-uuid-1234', 
-            name: 'Isaac Mathenge', 
-            role: 'Admin', 
-            email: email || 'admin@emailsys.com' 
-          },
-          access_token: 'fake-jwt-token-bypass'
-        };
-        // ==========================================
-        // END OF MOCK
-        // ==========================================
-
-        set({ user: data.user, token: data.access_token, isAuthenticated: true });
-        api.defaults.headers.common['Authorization'] = `Bearer ${data.access_token}`;
-        return data;
+        try {
+          // Call real backend API
+          const response = await api.post('/auth/login', { email, password });
+          const data = response.data;
+          
+          set({ 
+            user: data.user, 
+            token: data.access_token, 
+            isAuthenticated: true 
+          });
+          
+          api.defaults.headers.common['Authorization'] = `Bearer ${data.access_token}`;
+          return data;
+        } catch (error) {
+          set({ user: null, token: null, isAuthenticated: false });
+          throw error;
+        }
       },
 
       logout: () => {

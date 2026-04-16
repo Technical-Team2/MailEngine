@@ -176,12 +176,12 @@ export const useDeleteCC = () => {
 
 // ── AI Extractor ───────────────────────────────────────────────────────────
 export const useExtractionSources = () =>
-  useQuery({ queryKey: ['extraction-sources'], queryFn: () => api.get('/extractor/sources').then(r => r.data) });
+  useQuery({ queryKey: ['extraction-sources'], queryFn: () => api.get('/extraction/sources').then(r => r.data) });
 
 export const useAddSource = () => {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (data) => api.post('/extractor/sources', data).then(r => r.data),
+    mutationFn: (data) => api.post('/extraction/sources', data).then(r => r.data),
     onSuccess: () => { qc.invalidateQueries(['extraction-sources']); toast.success('Source added'); },
   });
 };
@@ -189,7 +189,7 @@ export const useAddSource = () => {
 export const useToggleSource = () => {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (id) => api.put(`/extractor/sources/${id}/toggle`).then(r => r.data),
+    mutationFn: (id) => api.put(`/extraction/sources/${id}/toggle`).then(r => r.data),
     onSuccess: () => qc.invalidateQueries(['extraction-sources']),
   });
 };
@@ -197,7 +197,7 @@ export const useToggleSource = () => {
 export const useDeleteSource = () => {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (id) => api.delete(`/extractor/sources/${id}`),
+    mutationFn: (id) => api.delete(`/extraction/sources/${id}`),
     onSuccess: () => { qc.invalidateQueries(['extraction-sources']); toast.success('Source deleted'); },
   });
 };
@@ -205,7 +205,7 @@ export const useDeleteSource = () => {
 export const useRunSource = () => {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (id) => api.post(`/extractor/sources/${id}/run`).then(r => r.data),
+    mutationFn: (id) => api.post(`/extraction/sources/${id}/run`).then(r => r.data),
     onSuccess: () => { toast.success('Extraction started'); },
   });
 };
@@ -213,13 +213,13 @@ export const useRunSource = () => {
 export const useExtractedContacts = (params = {}) =>
   useQuery({
     queryKey: ['extracted-contacts', params],
-    queryFn: () => api.get('/extractor/contacts', { params }).then(r => r.data),
+    queryFn: () => api.get('/extraction/extracted', { params }).then(r => r.data),
   });
 
 export const useApproveExtracted = () => {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (id) => api.post(`/extractor/contacts/${id}/approve`).then(r => r.data),
+    mutationFn: (id) => api.post(`/extraction/extracted/${id}/approve`).then(r => r.data),
     onSuccess: () => { qc.invalidateQueries(['extracted-contacts']); qc.invalidateQueries(['contacts']); toast.success('Contact approved'); },
   });
 };
@@ -227,7 +227,7 @@ export const useApproveExtracted = () => {
 export const useRejectExtracted = () => {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (id) => api.post(`/extractor/contacts/${id}/reject`).then(r => r.data),
+    mutationFn: (id) => api.post(`/extraction /extracted/${id}/reject`).then(r => r.data),
     onSuccess: () => { qc.invalidateQueries(['extracted-contacts']); toast.success('Contact rejected'); },
   });
 };

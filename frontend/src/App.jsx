@@ -35,6 +35,12 @@ function ProtectedLayout({ children }) {
 }
 
 export default function App() {
+  const { initAuth } = useAuthStore();
+
+  useEffect(() => {
+    initAuth();
+  }, [initAuth]);
+
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
